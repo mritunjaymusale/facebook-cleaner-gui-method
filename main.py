@@ -1,54 +1,60 @@
 import pyautogui
 import time
-
+from python_imagesearch.imagesearch import imagesearch
+from python_imagesearch.imagesearch import click_image
 # wrapper for less typing
+pyautogui.PAUSE=0.01
+
 def click(context):
     pyautogui.click(context)
 
-def locateOnScreen(image_path):
-    return pyautogui.locateOnScreen(image_path,confidence=0.75)
 
+def locateOnScreen(image_path):
+    return pyautogui.locateOnScreen(image_path, confidence=0.75)
+
+
+def deleteTagsUsingReport():
+    #haven't tested the new opencv method hence the sleep persists
+    
+    click_image('report_button.png',imagesearch('report_button.png'),"left",0,offset=1)
+    time.sleep(1)
+
+    
+    click_image('annoying_option.png',imagesearch('annoying_option.png'),"left",0,offset=1)
+    time.sleep(1)
+
+    
+    click_image('remove_tag_option`.png',imagesearch('remove_tag_option`.png'),"left",0,offset=1)
+    time.sleep(1)
+
+    
+    click_image('remove_tag_button.png',imagesearch('remove_tag_button.png'),"left",0,offset=1)
+    time.sleep(1)
+
+    click_image('navbar_back_button.png',imagesearch('navbar_back_button.png'),"left",0,offset=1)
+    time.sleep(1)
+
+
+    click_image('chrome_refresh.png',imagesearch('chrome_refresh.png'),"left",0,offset=1)
+    time.sleep(1)
 
 
 while True:
+    
+    if imagesearch('dropdown_menu.png',precision=0.9) != [-1,-1]:
+        click_image('dropdown_menu.png',imagesearch('dropdown_menu.png'),"left",0,offset=1)
+        if imagesearch('delete_option.png'):
+            click_image('delete_option.png',imagesearch('delete_option.png'),"left",0,offset=1)
+        elif imagesearch('report_button.png'):
+            deleteTagsUsingReport()
 
-    if locateOnScreen('dropdown_menu.png'):
-        dropdown = locateOnScreen('dropdown_menu.png')
-        click(dropdown)
+        elif imagesearch('unvote_button.png'):
+            click_image('unvote_button.png',imagesearch('unvote_button.png'),"left",0,offset=1)
+    elif imagesearch('load_more_option.png') != [-1,-1]:
+        print("Refreshing")
+        click_image('chrome_refresh.png',imagesearch('chrome_refresh.png'),"left",0,offset=1)
+        time.sleep(1)   
+
     else:
-        print("Found no dropdowns checking for older posts")
-        #TODO Use load_more.png for loading older posts
-
-
-    if locateOnScreen('delete_option.png'):
-        delete_option = locateOnScreen('delete_option.png')
-        click(delete_option)
-    if locateOnScreen('report_button.png'):
-
-        #sleep is added because internal screenshot mechanism is slow
-        report_option = locateOnScreen('report_button.png')
-        click(report_option)
-        time.sleep(1)
-        annoying_option= locateOnScreen('annoying_option.png')
-        click(annoying_option)
-        time.sleep(1)
-
-        remove_tag_option =locateOnScreen('remove_tag_option.png')
-        click(remove_tag_option)
-        time.sleep(1)
-
-        remove_tag_button = locateOnScreen('remove_tag_button.png')
-        click(remove_tag_button)
-        time.sleep(1)
-
-        navbar_back_button= locateOnScreen('navbar_back_button.png')
-        click(navbar_back_button)
-        time.sleep(1)
-
-        refresh_webpage = locateOnScreen('chrome_refresh.png')
-        click(refresh_webpage)
-        time.sleep(1)
-
-    if locateOnScreen('unvote_button.png'):
-        unvote_button = locateOnScreen('unvote_button.png')
-        click(unvote_button)
+        print("couldn't find more previous posts scrolling for more")
+        pyautogui.scroll(100)
