@@ -19,19 +19,34 @@ def failsafeCheck():
             print("exiting")
             exit()
 
-
-
-while True:
-    failsafeCheck()
-
+def deleteComments():
     if imagesearch('drop_down_menu.png')!= [-1,-1]:
         click_image('drop_down_menu.png',imagesearch('drop_down_menu.png'),"left",0.0,offset=0)
 
         if imagesearch('delete_option.png')!= [-1,-1]:    
-                click_image('delete_option.png',imagesearch('delete_option.png'),"left",0.0,offset=0)
+            click_image('delete_option.png',imagesearch('delete_option.png'),"left",0.0,offset=0)
    
+    else:
+        print("scrolling")
+        pyautogui.scroll(-10)
+
+def deletePosts():
+    if imagesearch('drop_down_menu.png')!= [-1,-1]:
+        click_image('drop_down_menu.png',imagesearch('drop_down_menu.png'),"left",0.0,offset=0)    
+    
+        if imagesearch('delete_option.png')!= [-1,-1]:    
+            click_image('delete_option.png',imagesearch('delete_option.png'),"left",0.0,offset=0)
+            
+            time.sleep(1)
+
+            if imagesearch('delete_button.png')!= [-1,-1]:    
+                click_image('delete_button.png',imagesearch('delete_button.png'),"left",0.0,offset=0)
+                time.sleep(1.8)
     
     else:
         print("scrolling")
         pyautogui.scroll(-10)
+
+while True:
+    failsafeCheck()
 
