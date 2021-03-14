@@ -1,4 +1,4 @@
-# facebook-cleaner-gui
+# facebook-cleaner-gui-method
 
 ### This project is also dead since the UI changed 
 much more simpler facebook account cleaner as compared to the puppeteer approach
